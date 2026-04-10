@@ -1,23 +1,44 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 "use client";
 
 // TODO 1: React hook-уудыг импортлох
-
+import { useEffect, useState } from "react";
+import { Header } from "./components/Header";
 // TODO 2: Product төрөл зарлах
 // API: https://dummyjson.com/products
+type productType = {
+  id: "string";
+  title: "string";
+  description: "string";
+  price: "number";
+  thumbnail: "string";
+  category: "string";
+  rating: "number";
+};
 
 // TODO 3: API хариуны төрөл зарлах
-
+type productResponse = {
+  products: "string";
+  total: "number";
+  skip: "string";
+  limit: "number";
+};
 const PRODUCTS_PER_PAGE = 10;
 
 export default function Home() {
   // TODO 4: State хувьсагчдыг зарлах (products, loading, error)
-
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   // TODO 5: Хайлтын state зарлах
   // search - хайлтын текст, эхлэх утга: ""
+  const [search, setSearch] = useState("");
 
   // TODO 6: Pagination state зарлах
   // total - нийт бүтээгдэхүүний тоо, эхлэх утга: 0
   // skip  - алгассан тоо, эхлэх утга: 0
+  const [total, setTotal] = useState(0);
+  const [skip, setSkip] = useState(0);
 
   // TODO 7: useEffect-ээр өгөгдөл татах
   // URL: search утгатай бол
@@ -26,7 +47,7 @@ export default function Home() {
   //   `https://dummyjson.com/products?limit=${PRODUCTS_PER_PAGE}&skip=${skip}`
   // dependency array: [search, skip]
   // data.total-г total state-д хадгалах
-
+  useEffect(() => {}, []);
   // TODO 8: Хайлт хийх handler
   // function handleSearch(e: React.ChangeEvent<HTMLInputElement>) {
   //   setSearch(e.target.value);
@@ -44,16 +65,6 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
       {/* Header */}
-      <header className="border-b border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
-        <div className="mx-auto max-w-7xl px-6 py-6">
-          <h1 className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
-            Product Store
-          </h1>
-          <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
-            Browse our collection of products
-          </p>
-        </div>
-      </header>
 
       {/* Category Navigation */}
       {/* TODO 15: Идэвхтэй категорийг тодруулах, дарахад тухайн категорийн бүтээгдэхүүн шүүх */}
@@ -133,8 +144,7 @@ export default function Home() {
         </div>
 
         <p className="mb-6 text-sm text-zinc-500 dark:text-zinc-400">
-          {/* TODO 12: Бүтээгдэхүүний тоо харуулах */}
-          0 products found
+          {/* TODO 12: Бүтээгдэхүүний тоо харуулах */}0 products found
         </p>
 
         {/* TODO 13: Доорх hardcode-г products.map() ашиглан солих */}
@@ -161,17 +171,25 @@ export default function Home() {
                 </span>
               </div>
               <p className="mb-3 line-clamp-2 text-sm leading-relaxed text-zinc-500 dark:text-zinc-400">
-                The Essence Mascara Lash Princess is a popular mascara known for its volumizing and lengthening effects.
+                The Essence Mascara Lash Princess is a popular mascara known for
+                its volumizing and lengthening effects.
               </p>
               <div className="flex items-center gap-1.5">
                 <div className="flex">
                   {[1, 2, 3, 4, 5].map((star) => (
-                    <svg key={star} className={`h-4 w-4 ${star <= 5 ? "text-amber-400" : "text-zinc-200 dark:text-zinc-700"}`} fill="currentColor" viewBox="0 0 20 20">
+                    <svg
+                      key={star}
+                      className={`h-4 w-4 ${star <= 5 ? "text-amber-400" : "text-zinc-200 dark:text-zinc-700"}`}
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
                       <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                     </svg>
                   ))}
                 </div>
-                <span className="text-sm text-zinc-500 dark:text-zinc-400">(4.94)</span>
+                <span className="text-sm text-zinc-500 dark:text-zinc-400">
+                  (4.94)
+                </span>
               </div>
             </div>
           </div>
@@ -198,17 +216,25 @@ export default function Home() {
                 </span>
               </div>
               <p className="mb-3 line-clamp-2 text-sm leading-relaxed text-zinc-500 dark:text-zinc-400">
-                The Eyeshadow Palette with Mirror offers a versatile range of eyeshadow shades for creating stunning eye looks.
+                The Eyeshadow Palette with Mirror offers a versatile range of
+                eyeshadow shades for creating stunning eye looks.
               </p>
               <div className="flex items-center gap-1.5">
                 <div className="flex">
                   {[1, 2, 3, 4, 5].map((star) => (
-                    <svg key={star} className={`h-4 w-4 ${star <= 4 ? "text-amber-400" : "text-zinc-200 dark:text-zinc-700"}`} fill="currentColor" viewBox="0 0 20 20">
+                    <svg
+                      key={star}
+                      className={`h-4 w-4 ${star <= 4 ? "text-amber-400" : "text-zinc-200 dark:text-zinc-700"}`}
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
                       <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                     </svg>
                   ))}
                 </div>
-                <span className="text-sm text-zinc-500 dark:text-zinc-400">(3.28)</span>
+                <span className="text-sm text-zinc-500 dark:text-zinc-400">
+                  (3.28)
+                </span>
               </div>
             </div>
           </div>
@@ -235,17 +261,25 @@ export default function Home() {
                 </span>
               </div>
               <p className="mb-3 line-clamp-2 text-sm leading-relaxed text-zinc-500 dark:text-zinc-400">
-                The Powder Canister is a finely milled setting powder designed to set makeup and control oil throughout the day.
+                The Powder Canister is a finely milled setting powder designed
+                to set makeup and control oil throughout the day.
               </p>
               <div className="flex items-center gap-1.5">
                 <div className="flex">
                   {[1, 2, 3, 4, 5].map((star) => (
-                    <svg key={star} className={`h-4 w-4 ${star <= 4 ? "text-amber-400" : "text-zinc-200 dark:text-zinc-700"}`} fill="currentColor" viewBox="0 0 20 20">
+                    <svg
+                      key={star}
+                      className={`h-4 w-4 ${star <= 4 ? "text-amber-400" : "text-zinc-200 dark:text-zinc-700"}`}
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
                       <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                     </svg>
                   ))}
                 </div>
-                <span className="text-sm text-zinc-500 dark:text-zinc-400">(3.82)</span>
+                <span className="text-sm text-zinc-500 dark:text-zinc-400">
+                  (3.82)
+                </span>
               </div>
             </div>
           </div>
