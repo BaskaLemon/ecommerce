@@ -52,7 +52,7 @@ export default function Home() {
       .finally(() => {
         setLoading(false);
       });
-  }, [skip, search, category, PRODUCTS_PER_PAGE]);
+  }, [skip, search, category]);
 
   // TODO 10: Ачааллын төлөв (loading state)
 
@@ -252,15 +252,33 @@ export default function Home() {
             className="w-full rounded-xl border border-zinc-200 bg-white px-4 py-3 text-sm text-zinc-900 placeholder-zinc-400 shadow-sm outline-none transition-colors focus:border-zinc-400 focus:ring-2 focus:ring-zinc-200 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:placeholder-zinc-500 dark:focus:border-zinc-500 dark:focus:ring-zinc-800 sm:max-w-md"
           />
         </div>
-        <p className="mb-6 text-sm text-zinc-500 dark:text-zinc-400">
-          {products.length} products found
-        </p>
+        {loading ? (
+          <div className="flex justify-center py-20">
+            <div className="h-8 w-8 animate-spin rounded-full border-2 border-zinc-300 border-t-zinc-900 dark:border-zinc-700 dark:border-t-zinc-100" />
+          </div>
+        ) : error ? (
+          <div className="flex justify-center py-20">
+            <p className="text-red-500">{error}</p>
+          </div>
+        ) : (
+          <>
+            <p className="mb-6 text-sm text-zinc-500 dark:text-zinc-400">
+              {total} products found
+            </p>
 
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {products.map((product) => (
-            <ProductCard product={product} key={product.id} />
-          ))}
-        </div>
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {products.length === 0 ? (
+                <p className="col-span-full text-center py-10">
+                  No products found
+                </p>
+              ) : (
+                products.map((product) => (
+                  <ProductCard product={product} key={product.id} />
+                ))
+              )}
+            </div>
+          </>
+        )}
         <div className="mt-10 flex items-center justify-center gap-4">
           <button
             disabled={currentPage === 1}
