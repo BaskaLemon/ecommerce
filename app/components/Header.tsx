@@ -3,7 +3,7 @@ import { UserContext } from "../providers/user-providers";
 import Link from "next/link";
 
 export const Header = () => {
-  const { user, setUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   return (
     <header className="border-b flex justify-center border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
       <div className="container flex justify-between w-screen py-4 items-center">
@@ -18,7 +18,7 @@ export const Header = () => {
         {!user ? (
           <div>
             <Link
-              href={"/login"}
+              href="/login"
               className="w-full rounded-xl bg-zinc-900 px-4 py-3 text-sm font-medium text-white shadow-sm transition-colors hover:bg-zinc-800 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-200"
             >
               Нэвтрэх
